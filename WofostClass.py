@@ -14,23 +14,36 @@ out_dir = "./OUT"
 class Wofost:
     """ sample wofost runner based on pcse """
 
+    """
+    crop: crop file name in DATA directory
+    soil: soil file name in DATA directory
+    argo: argo file name in DATA directory
+    day: number of day for running model
+    saved_name: name of csv output that will save in OUT directory
+    """
+
     def run(self, crop, soil, agro, day, saved_name="output"):
+        # load argo from directory
         agromanagement = YAMLAgroManagementReader(f"{base_dir}/{agro}")
         sitedata = WOFOST71SiteDataProvider(WAV=100, CO2=360)
+        # load soil from directory
         soildata = CABOFileReader(f"{base_dir}/{soil}")
+        # load crop from directory
         cropdata = CABOFileReader(f"{base_dir}/{crop}")
+        # load weather data from NASA API
         wdp = NASAPowerWeatherDataProvider(latitude=52, longitude=5)
+        # packaing parameters
         parameters = ParameterProvider(cropdata=cropdata, soildata=soildata,
                                        sitedata=sitedata)
+        # create model
         wofost = Wofost71_WLP_FD(parameters, wdp, agromanagement)
-        if not day:
-            wofost.run_till_terminate()
-        else:
-            wofost.run(day)
+        # run till [day]
+        wofost.run(day)
 
         model_out_put = wofost.get_output()
         df = pd.DataFrame(model_out_put)
         df.to_csv(f"{out_dir}/{saved_name}")
+
 
 if __name__ == '__main__':
     fire.Fire(Wofost)
