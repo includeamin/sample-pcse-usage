@@ -32,6 +32,5 @@ class Wofost:
         df = pd.DataFrame(model_out_put)
         df.to_csv(f"{out_dir}/{saved_name}")
 
-
 if __name__ == '__main__':
     fire.Fire(Wofost)
