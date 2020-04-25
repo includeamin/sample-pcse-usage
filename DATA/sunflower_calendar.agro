@@ -1,0 +1,13 @@
+Version: 1.0
+AgroManagement:
+- 2012-01-01:
+    CropCalendar:
+        crop_name: 'SUN1103- fc'
+        variety_name: 'SUN1103- fc.CAB'
+        crop_start_date: 2012-06-01
+        crop_start_type: emergence
+        crop_end_date: 2012-09-20
+        crop_end_type: harvest
+        max_duration: 153
+    TimedEvents: null
+    StateEvents: null
