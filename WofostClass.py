@@ -2,7 +2,6 @@ from pcse.base_classes import ParameterProvider
 from pcse.fileinput import CABOFileReader
 from pcse.fileinput import YAMLAgroManagementReader
 from pcse.util import WOFOST71SiteDataProvider
-from pcse.db import NASAPowerWeatherDataProvider
 from pcse.fileinput import CABOWeatherDataProvider
 from pcse.models import Wofost71_WLP_FD
 import fire
