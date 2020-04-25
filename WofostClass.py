@@ -40,6 +40,7 @@ class Wofost:
         # run till [day]
         wofost.run(day)
 
+        # save output az a csv in OUT directory
         model_out_put = wofost.get_output()
         df = pd.DataFrame(model_out_put)
         df.to_csv(f"{out_dir}/{saved_name}")
