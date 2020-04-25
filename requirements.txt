@@ -1,2 +1,2 @@
-psce
+psce==5.4.2
 fire

@@ -3,6 +3,7 @@ from pcse.fileinput import CABOFileReader
 from pcse.fileinput import YAMLAgroManagementReader
 from pcse.util import WOFOST71SiteDataProvider
 from pcse.db import NASAPowerWeatherDataProvider
+from pcse.fileinput import CABOWeatherDataProvider
 from pcse.models import Wofost71_WLP_FD
 import fire
 import pandas as pd
@@ -18,11 +19,12 @@ class Wofost:
     crop: crop file name in DATA directory
     soil: soil file name in DATA directory
     argo: argo file name in DATA directory
+    waether_filename and weathet_cabowe:  weather file name and path
     day: number of day for running model
     saved_name: name of csv output that will save in OUT directory
     """
 
-    def run(self, crop, soil, agro, day, saved_name="output"):
+    def run(self, crop, soil, agro, weather_filename, weather_cabowe, day, saved_name="output"):
         # load argo from directory
         agromanagement = YAMLAgroManagementReader(f"{base_dir}/{agro}")
         sitedata = WOFOST71SiteDataProvider(WAV=100, CO2=360)
@@ -30,8 +32,8 @@ class Wofost:
         soildata = CABOFileReader(f"{base_dir}/{soil}")
         # load crop from directory
         cropdata = CABOFileReader(f"{base_dir}/{crop}")
-        # load weather data from NASA API
-        wdp = NASAPowerWeatherDataProvider(latitude=52, longitude=5)
+        # load weather data from directory
+        wdp = CABOWeatherDataProvider(fname=weather_filename, fpath=weather_cabowe)
         # packaing parameters
         parameters = ParameterProvider(cropdata=cropdata, soildata=soildata,
                                        sitedata=sitedata)
